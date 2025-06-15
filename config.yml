@@ -40,81 +40,50 @@ kaggle:
   title: *title
   subtitle: *subtitle
   description: *description
-  id: ""
+  id: "andreschirinos/anh-dispatch-report"
   #id_no: 12345
   licenses:
     - name: "CC0-1.0"
   resources:
-    - path: "advertiser.parquet"
-      description: "Advertiser data from the BOB exchange"
+    - path: "dispatches.csv"
+      description: "Dispatches data"
       schema:
         fields:
-          - name: "advertiser_userno"
+          - name: "destino"
             order: 0
-            description: "Unique identifier for the advertiser"
+            description: "Destination of the dispatch"
             type: "string"
-          - name: "advertiser_nickname"
+          - name: "localidad"
             order: 1
-            description: "Nickname of the advertiser"
+            description: "Locality of the dispatch"
             type: "string"
-          - name: "advertiser_monthordercount"
+          - name: "producto"
             order: 2
-            description: "Number of orders placed by the advertiser in the last month"
-            type: "number"
-          - name: "advertiser_monthfinishrate"
+            description: "Product of the dispatch"
+            type: "string"
+          - name: "hora_salida"
             order: 3
-            description: "Finish rate of the advertiser in the last month"
-            type: "number"
-          - name: "advertiser_positiverate"
+            description: "Departure time of the dispatch"
+            type: "datetime"
+          - name: "hora_llegada_aprox"
             order: 4
-            description: "Positive rate of the advertiser"
-            type: "number"
-          - name: "advertiser_usertype"
-            order: 5
-            description: "Type of the advertiser (e.g., user, merchant)"
-            type: "string"
-          - name: "advertiser_usergrade"
-            order: 6
-            description: "Grade of the advertiser"
-            type: "string"
-          - name: "advertiser_u seridentity"
-            order: 7
-            description: "Identity of the advertiser (e.g., MASS_MERCHANT, BLOCK_MERCHANT)"
-            type: "string"
-          - name: "advertiser_viplevel"
-            order: 8
-            description: "VIP level of the advertiser"
-            type: "number"
-          - name: "advertiser_isblocked"
-            order: 9
-            description: "Indicates if the advertiser is blocked"
-            type: "boolean"
-          - name: "advertiser_activetimeinsecond"
-            order: 10
-            description: "Active time of the advertiser in seconds"
-            type: "number"
-          - name: "timestamp"
-            order: 11
-            description: "Timestamp of the data collection"
+            description: "Approximate arrival time of the dispatch"
             type: "datetime"
           - name: "source"
-            order: 12
-            description: "Source of the data (e.g, binance)"
+            order: 5
+            description: "Source of the data"
             type: "string"
-      name: advertiser
+          - name: "timestamp"
+            order: 6
+            description: "Timestamp of the data collection"
+            type: "datetime"
+      name: dispatches
       profile: tabular-data-resource
-      title: Advertiser Table
-      format: format
+      title: "Dispatches Data"
+      format: csv
       encoding: utf-8
-    - path: "advice.parquet"
-      description: "Advice data"
-      name: advice
-    - path: "trade_methods.parquet"
-      description: "Trade methods data"
-      name: trade_methods
   keywords: *keywords
-  name: "p2p-bob-exchange"
-  homepage: "https://sociest.org"
+  name: "anh-dispatch-report"
   version: "1.0.0"
   contributors:
     - "title": "Andres Chirinos"

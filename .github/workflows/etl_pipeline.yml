@@ -132,56 +132,55 @@ jobs:
           path: ./data/*
           retention-days: ${{ env.GITHUB_ACTIONS_ARTIFACT_DATA_RETENTION_DAYS }}
 
-#  load:
-#    name: Load
-#    needs: transform
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout repo
-#        uses: actions/checkout@v4
-#
-#      - name: Download clean data
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: clean-data
-#          path: ./data/
-#
-#      - name: Set up Python
-#        uses: actions/setup-python@v4
-#        with:
-#          python-version: "3.10"
-#
-#      - name: Install dependencies
-#        run: |
-#          python -m pip install --upgrade pip
-#          pip install papermill ipykernel great_expectations
-#          python -m ipykernel install --user --name python3 --display-name "Python 3"
-#
-#      - name: Configure Kaggle credentials
-#        run: |
-#          mkdir -p ~/.config/kaggle
-#            echo "{\"username\": \"${{ secrets.KAGGLE_USERNAME }}\", \"key\": \"${{ secrets.KAGGLE_KEY }}\"}" > ~/.config/kaggle/kaggle.json
-#          chmod 600 ~/.config/kaggle/kaggle.json
-#
-#      - name: Run Load Notebook
-#        run: |
-#          papermill notebooks/03_load.ipynb output/03_load_out.ipynb --kernel python --parameters_file config.yml
-#
-#      - name: Upload Load Notebook
-#        if: ${{ failure() }}
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: load_notebook_logs
-#          path: output/*.ipynb
-#          retention-days: ${{ env.GITHUB_ACTIONS_ARTIFACT_LOGS_RETENTION_DAYS }}
+  load:
+    name: Load
+    needs: transform
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      #- name: Run Data Quality Checks
-      #  run: |
-      #    great_expectations checkpoint run -n etl_checkpoint --fail-fast
+      - name: Download clean data
+        uses: actions/download-artifact@v4
+        with:
+          name: clean-data
+          path: ./data/
 
-      #- name: Upload Data Quality Report
-      #  uses: actions/upload-artifact@v4
-      #  with:
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install papermill ipykernel great_expectations
+          python -m ipykernel install --user --name python3 --display-name "Python 3"
+
+      - name: Configure Kaggle credentials
+        run: |
+          mkdir -p ~/.config/kaggle
+            echo "{\"username\": \"${{ secrets.KAGGLE_USERNAME }}\", \"key\": \"${{ secrets.KAGGLE_KEY }}\"}" > ~/.config/kaggle/kaggle.json
+          chmod 600 ~/.config/kaggle/kaggle.json
+
+      - name: Run Load Notebook
+        run: |
+          papermill notebooks/03_load.ipynb output/03_load_out.ipynb --kernel python --parameters_file config.yml
+
+      - name: Upload Load Notebook
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: load_notebook_logs
+          path: output/*.ipynb
+          retention-days: ${{ env.GITHUB_ACTIONS_ARTIFACT_LOGS_RETENTION_DAYS }}
+          
+     #- name: Run Data Quality Checks
+     #  run: |
+     #    great_expectations checkpoint run -n etl_checkpoint --fail-fast
+     #- name: Upload Data Quality Report
+     #  uses: actions/upload-artifact@v4
+     #  with:
       #    name: data_quality_report
       #    path: great_expectations/uncommitted/validations/
       #    retention-days: ${{ env.GITHUB_ACTIONS_ARTIFACT_LOGS_RETENTION_DAYS }}
